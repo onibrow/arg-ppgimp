@@ -54,5 +54,16 @@ By using two pairs of ADG1608's, a 16x2 input 1x2 output can be created. This me
 |I\_S/D 1608 | 126 | mA max |
 |I\_S/D 1609 | 94 | mA max |
 
-As we are dealing with specimens in the 10K Ohm range, the 13.5 Ohm and 173pF ON impedence is negligible, even if the electrode is traveling through 2 multiplexors.
+As we are dealing with specimens in the 10K Ohm range, the 13.5 Ohm and 173pF ON impedence is negligible, even if the electrode is traveling through 2 multiplexors. The max available current draw is much over the required 1mA of current through the electrodes, so the chip fits our needs. It aslo fits our impedance chip bandwidth, where it can do frequency sweeps over 1kHz to 100kHz. More on this in the "Impedence Analyzer" section.
 
+#### Tunable Current Source
+
+In order to drive our selectable electrodes with a user defined amount of current, we needed an adjustable current source. For this task, the [LM134/LM234/LM334 3-Terminal Adjustable Current Source](http://www.ti.com/product/LM134) was chosen. Specifically, the LM334 was chosen for its small form factor and easily identifiable 3-Pin Through Hole casing. It has a huge operating voltage from 1V to 40V, and can be tuned to supply current between 1uA to 10mA. The chip can also be operated in a temperature compensation region to eliminate its temperature dependence up to 0.2% accuracy.
+
+![LM334](img/lm334.png)
+
+For this circuit, the diode to use was already suggested, so the next choice was to pick out a digital potentiometer. TI also provided the math to prove the temperature coefficient compensation with the chosen diode, and drew the following relationship between R1 and R2:
+
+![lm334 math](img/lm334-math.png)
+
+From this, 1k and 10k 256 step digital potentiometers were chosen, with the math coming out to 3.9/39 Ohms per step, capable of driving in the range of 67.7uA to just short of 1mA. This just about fits our spec, going over to the upper limit of 1mA. The digital potentiometers chosen are the [AD840](https://www.analog.com/en/products/ad8400.html) in both the 1K and 10K variant. They are controlled over SPI as designated write only slave devices. It can operate at between 3V and 5.5V and will typically draw less than 1mA.
