@@ -2,8 +2,6 @@
 
 ## Seiya Ono Sp'19
 
------
-
 The goal of this project is to collaborate with doctors at UCSD and Dr. Muller's student, Sina Faraji, to create a test bench for our group's Bioimpedence Array and OLED/OPD Oxymeter sensors to measure tissue damage in mice. We hope to use Sina Faraji's new OLED/OPD driver chip to take PPG measurements while using our own impedence arrays and electronics to measure tissue impedence and driver current through our target.
 
 -----
@@ -36,7 +34,7 @@ We were asked to get our 15 electrode array to be able to take any impedence mea
 
 Because the board is spec'd to be able to take impedence measurements as well as source current, it is critical to choose a multiplexor that has very low on resistance, while having very high off resistance. Luckily, most CMOS technology has this as standard, so picking an analog mux was not very difficult. We settled with the [ADG1608/1609](https://www.analog.com/en/products/adg1608.html) because of its 3 bit (8 input) mux, as well as its secondary variant 2 bit (4x2 input) DPDT (double pole double throw) configuration. To differentiate, the ADG1608 variant is the 3 bit 8 input mux, and the ADG1609 is the 2 bit 4x2 input mux. See the figure below for clarification.
 
-![img/adg1608-1609.png]
+![img/adg1608-1609.png](mux diff)
 
 By using two pairs of ADG1608's, a 16x2 input 1x2 output can be created. This means the circuit can individually select a pair of electrodes to be used by the impedence analyzer and tunable current source. To select between either of the two inputs, the ADG1609 will be used as a demuxer to select either the impedence analyzer or tunable current source. The DPDT configuration is very usedful in this sceneario because we are trying to always drive a _pari_ of electrodes.
 
