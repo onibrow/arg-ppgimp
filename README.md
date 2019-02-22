@@ -36,5 +36,23 @@ Because the board is spec'd to be able to take impedence measurements as well as
 
 ![mux diff](img/adg1608-1609.png)
 
-By using two pairs of ADG1608's, a 16x2 input 1x2 output can be created. This means the circuit can individually select a pair of electrodes to be used by the impedence analyzer and tunable current source. To select between either of the two inputs, the ADG1609 will be used as a demuxer to select either the impedence analyzer or tunable current source. The DPDT configuration is very usedful in this sceneario because we are trying to always drive a _pari_ of electrodes.
+By using two pairs of ADG1608's, a 16x2 input 1x2 output can be created. This means the circuit can individually select a pair of electrodes to be used by the impedence analyzer and tunable current source. To select between either of the two inputs, the ADG1609 will be used as a demuxer to select either the impedence analyzer or tunable current source. The DPDT configuration is very usedful in this sceneario because we are trying to always drive a _pair_ of electrodes. Here are some important specs when running off of a 3.3V power rail.
+
+| Parameter | Value | Unit |
+| --------- | ----- | ---- |
+| R\_on      | 13.5  | Ohms |
+| S/D Leakage | 0.1 | nA max |
+| -3dB 1608 | 34 | MHz typ |
+| -3dB 1609 | 72 | MHz typ |
+| C\_S OFF | 23 | pF typ |
+| C\_D OFF 1608 | 145 | pF type |
+| C\_D OFF 1609 | 72 | pF typ |
+| C\_S/D ON 1608 | 173 | pF typ |
+| C\_S/D ON 1609 | 95 | pF typ |
+| I\_DD | 0.001 | uA typ |
+| V\_DD | 3.3 | V |
+|I\_S/D 1608 | 126 | mA max |
+|I\_S/D 1609 | 94 | mA max |
+
+As we are dealing with specimens in the 10K Ohm range, the 13.5 Ohm and 173pF ON impedence is negligible, even if the electrode is traveling through 2 multiplexors.
 
