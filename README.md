@@ -66,4 +66,21 @@ For this circuit, the diode to use was already suggested, so the next choice was
 
 ![lm334 math](img/lm334-math.png)
 
-From this, 1k and 10k 256 step digital potentiometers were chosen, with the math coming out to 3.9/39 Ohms per step, capable of driving in the range of 67.7uA to just short of 1mA. This just about fits our spec, going over to the upper limit of 1mA. The digital potentiometers chosen are the [AD840](https://www.analog.com/en/products/ad8400.html) in both the 1K and 10K variant. They are controlled over SPI as designated write only slave devices. It can operate at between 3V and 5.5V and will typically draw less than 1mA.
+From this, 1k and 10k 256 step digital potentiometers were chosen, with the math coming out to 3.9/39 Ohms per step, capable of driving in the range of 67.7uA to just short of 1mA. This just about fits our spec, going over to the upper limit of 1mA. The digital potentiometers chosen are the [AD8400](https://www.analog.com/en/products/ad8400.html) in both the 1K and 10K variant. They are controlled over SPI as designated write only slave devices. It can operate at between 3V and 5.5V and will typically draw less than 1mA.
+
+#### Impedence Measurements
+
+We would like to measure impedences between 1M Ohm (Magnitude) and 1k Ohm on our species. The chip for this is the [AD5933](https://www.analog.com/en/products/ad5933.html) which can do frequency sweeps. See Page 14 of the Data Sheet for more information on how to program the chip to do this.
+
+Setting Gain - See Page 18 on how to choose the Gain setting resistor R\_FB to ensure that the analog readings do not saturate. The gain factor needs to be recalculated if R\_FB changes, if the output excitation voltage (more on this later) changes, or if the PGA gain is set differently. On the topic of operating voltages, there are 4 to choose from:
+
+| Range | Output Excitation Voltage Amplitude | Output DC Bias Level |
+| ----- | ----------------------------------- | -------------------- |
+| 1 | 1.98 V p-p | 1.48 V |
+| 2 | 0.97 V p-p | 0.76 V |
+| 3 | 383 mV p-p | 0.31 V |
+| 4 | 198 mV p-p | 0.173 V|
+
+These numbers factor into what value should be chosen for the feedback resistor.
+
+The chip does come with an internal 16.776 MHz oscillator, but it can be replaced by placing a 16MHz oscillator on MCLK, and then setting the control register to use the external clock. By default, on power up the internal oscillator is selected.
