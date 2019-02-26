@@ -74,13 +74,17 @@ We would like to measure impedences between 1M Ohm (Magnitude) and 1k Ohm on our
 
 Setting Gain - See Page 18 on how to choose the Gain setting resistor R\_FB to ensure that the analog readings do not saturate. The gain factor needs to be recalculated if R\_FB changes, if the output excitation voltage (more on this later) changes, or if the PGA gain is set differently. On the topic of operating voltages, there are 4 to choose from:
 
-| Range | Output Excitation Voltage Amplitude | Output DC Bias Level |
-| ----- | ----------------------------------- | -------------------- |
-| 1 | 1.98 V p-p | 1.48 V |
-| 2 | 0.97 V p-p | 0.76 V |
-| 3 | 383 mV p-p | 0.31 V |
-| 4 | 198 mV p-p | 0.173 V|
+| Range | Output Excitation Voltage Amplitude | Output DC Bias Level | Output Series Resistance |
+| ----- | ----------------------------------- | -------------------- | ------------------------ |
+| 1 | 1.98 V p-p | 1.48 V | 200 Ohm |
+| 2 | 0.97 V p-p | 0.76 V | 2.4k Ohm |
+| 3 | 383 mV p-p | 0.31 V | 1.0k Ohm |
+| 4 | 198 mV p-p | 0.173 V| 600 Ohm |
 
-These numbers factor into what value should be chosen for the feedback resistor.
+These numbers factor into what value should be chosen for the feedback resistor. The equation for choosing the feedback resistor is as follows:
+
+Output Excitation Voltage Range * Gain Setting Resistor / Z\_Uknown * PGA Gain
+
+By selecting the typical range 1 (~2V p-p) setting, we must choose a R\_FB that is roughly on the same order of magnitude as the unknown impedences we are measuring. From Yasser's Ulcer sensing paper (Swisher, S. L. et al. Impedance sensing device enables early detection of pressure ulcers in vivo. Nat. Commun. 6:6575 doi: 10.1038/ncomms7575 (2015)), we find that the typical impedence magnitude ranges from 10^4 to 10^6, so we will choos a 1M Ohm resistor for the feedback. This way, it should be able to cover a very wide range of impedences.
 
 The chip does come with an internal 16.776 MHz oscillator, but it can be replaced by placing a 16MHz oscillator on MCLK, and then setting the control register to use the external clock. By default, on power up the internal oscillator is selected.
