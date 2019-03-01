@@ -2,7 +2,7 @@
 
 ## Seiya Ono Sp'19
 
-The goal of this project is to collaborate with doctors at UCSD and Dr. Muller's student, Sina Faraji, to create a test bench for our group's Bioimpedence Array and OLED/OPD Oxymeter sensors to measure tissue damage in mice. We hope to use Sina Faraji's new OLED/OPD driver chip to take PPG measurements while using our own impedence arrays and electronics to measure tissue impedence and driver current through our target.
+The goal of this project is to collaborate with doctors at UCSD and Dr. Muller's student, Sina Faraji, to create a test bench for our group's Bioimpedence Array and OLED/OPD Oxymeter sensors to measure tissue damage in mice. We hope to use Sina Faraji's new OLED/OPD driver chip to take PPG measurements while using our own impedence arrays and electronics to measure tissue of the target.
 
 -----
 
