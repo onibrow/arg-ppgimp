@@ -1693,9 +1693,9 @@ Silk outline shows header location.
 <text x="-1.524" y="-1.27" size="0.6096" layer="27" font="vector" ratio="20">&gt;VALUE</text>
 </package>
 <package name="POT-3PIN">
-<pad name="3" x="-2.54" y="-2.54" drill="1.8"/>
-<pad name="1" x="2.54" y="-2.54" drill="1.8"/>
-<pad name="2" x="0" y="2.54" drill="1.8"/>
+<pad name="3" x="-2.54" y="-2.54" drill="1" shape="long"/>
+<pad name="1" x="2.54" y="-2.54" drill="1" shape="long"/>
+<pad name="2" x="0" y="2.54" drill="1" shape="long"/>
 <wire x1="-4.765" y1="4.765" x2="4.765" y2="4.765" width="0.127" layer="21"/>
 <wire x1="-4.765" y1="-4.765" x2="4.765" y2="-4.765" width="0.127" layer="21"/>
 <wire x1="-4.765" y1="4.765" x2="-4.765" y2="-4.765" width="0.127" layer="21"/>
@@ -7472,7 +7472,7 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="REV" value="A"/>
 <attribute name="SUBSYSTEM_NAME" value="Imepdence"/>
 </part>
-<part name="U5" library="scono" deviceset="AD5933YRSZ" device=""/>
+<part name="U5" library="scono" deviceset="AD5933YRSZ" device="" value="AD5933"/>
 <part name="C1" library="scono" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C2" library="scono" deviceset="CAP" device="0603-CAP" value="10uF"/>
 <part name="SUPPLY6" library="scono" deviceset="GND" device=""/>
@@ -7480,7 +7480,7 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <part name="R3" library="scono" deviceset="R-US_" device="R0603" value="10K"/>
 <part name="SUPPLY7" library="scono" deviceset="AGND" device=""/>
 <part name="SUPPLY8" library="scono" deviceset="GND" device=""/>
-<part name="J6" library="scono" deviceset="CONN_02" device="" package3d_urn="urn:adsk.eagle:package:38039/1" value="SDA"/>
+<part name="J6" library="scono" deviceset="CONN_02" device="" package3d_urn="urn:adsk.eagle:package:38039/1" value="I2C"/>
 <part name="RFB" library="scono" deviceset="R-US_" device="R0603" value="1M"/>
 <part name="U6" library="scono" deviceset="ADG1609" device=""/>
 <part name="SUPPLY9" library="scono" deviceset="AGND" device=""/>
@@ -7495,6 +7495,9 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <part name="R5" library="scono" deviceset="R-US_" device="R0603" value="200K"/>
 <part name="R6" library="scono" deviceset="R-US_" device="R0603" value="100K"/>
 <part name="U1" library="scono" deviceset="LM334Z/NOPB" device=""/>
+<part name="C5" library="scono" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="C6" library="scono" deviceset="CAP" device="0603-CAP" value="10uF"/>
+<part name="SUPPLY13" library="scono" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7866,6 +7869,17 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <attribute name="NAME" x="74.93" y="50.8" size="1.016" layer="95" rot="R270"/>
 <attribute name="VALUE" x="72.39" y="50.8" size="1.016" layer="96" rot="R270" align="top-left"/>
 </instance>
+<instance part="C5" gate="G$1" x="66.04" y="73.66" smashed="yes" rot="R90">
+<attribute name="NAME" x="64.516" y="72.39" size="1.016" layer="95" rot="R90"/>
+<attribute name="VALUE" x="68.58" y="72.39" size="1.016" layer="96" rot="R90"/>
+</instance>
+<instance part="C6" gate="G$1" x="58.42" y="73.66" smashed="yes" rot="R90">
+<attribute name="NAME" x="56.896" y="72.39" size="1.016" layer="95" rot="R90"/>
+<attribute name="VALUE" x="60.96" y="72.39" size="1.016" layer="96" rot="R90"/>
+</instance>
+<instance part="SUPPLY13" gate="GND" x="58.42" y="68.58" smashed="yes">
+<attribute name="VALUE" x="57.15" y="66.04" size="1.016" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -7911,6 +7925,12 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <wire x1="139.7" y1="66.04" x2="144.78" y2="66.04" width="0.1524" layer="91"/>
 <label x="144.78" y="66.04" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="C5" gate="G$1" pin="2"/>
+<pinref part="C6" gate="G$1" pin="2"/>
+<wire x1="66.04" y1="76.2" x2="58.42" y2="76.2" width="0.1524" layer="91"/>
+<label x="60.96" y="76.2" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="GND" class="0">
 <segment>
@@ -7937,6 +7957,13 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <segment>
 <pinref part="U6" gate="A" pin="GND"/>
 <pinref part="SUPPLY12" gate="GND" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C6" gate="G$1" pin="1"/>
+<pinref part="C5" gate="G$1" pin="1"/>
+<wire x1="58.42" y1="71.12" x2="66.04" y2="71.12" width="0.1524" layer="91"/>
+<pinref part="SUPPLY13" gate="GND" pin="GND"/>
+<junction x="58.42" y="71.12"/>
 </segment>
 </net>
 <net name="SDA" class="0">
