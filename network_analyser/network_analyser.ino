@@ -10,7 +10,7 @@
 #define FREQ_INCR   (1000)
 #define NUM_INCR    (99)
 // TODO: TUNE THIS
-#define REF_RESIST  (200000)
+#define REF_RESIST  (200)
 
 int sel_0 = 2;
 int sel_1 = 3;
@@ -69,20 +69,20 @@ void loop(void)
   delay(1);
   Serial.println("01 Sweep (200k)");
   delay(5000);
-//
-//  digitalWrite(sel_0, LOW);
-//  digitalWrite(sel_1, HIGH);
-//  delay(1);
-//  frequencySweepEasy();
-//  Serial.println("10 Sweep (0.1uF)");
-//  delay(5000);
-//  
-//  digitalWrite(sel_0, HIGH);
-//  digitalWrite(sel_1, HIGH);
-//  delay(1);
-//  frequencySweepEasy();
-//  Serial.println("11 Sweep (100K + 1uF)");
-//  delay(5000);
+
+  digitalWrite(sel_0, LOW);
+  digitalWrite(sel_1, HIGH);
+  delay(1);
+  frequencySweepEasy();
+  Serial.println("10 Sweep (0.1uF)");
+  delay(5000);
+  
+  digitalWrite(sel_0, HIGH);
+  digitalWrite(sel_1, HIGH);
+  delay(1);
+  frequencySweepEasy();
+  Serial.println("11 Sweep (100K + 1uF)");
+  delay(5000);
 
 }
 
@@ -109,7 +109,7 @@ void frequencySweepEasy() {
 
       // Compute impedance
       double magnitude = sqrt(pow(real[i], 2) + pow(imag[i], 2));
-      double impedance = 1 / (magnitude * gain[i]);
+      double impedance = 1 / (magnitude * gain[i]) * 1000;
       Serial.print("  Gain=");
       Serial.print(1/ gain[i]);
       Serial.print("  |Z|=");
