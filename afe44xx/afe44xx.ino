@@ -280,7 +280,7 @@ void afe44xxInit (void)
   afe44xxRead(LEDCNTRL);
   afe44xxWrite(CONTROL0, 0x000000);
   
-  afe44xxWrite(CONTROL2, 0x000000); // LED_RANGE=100mA, LED=50mA
+  afe44xxWrite(CONTROL2, 0x0000A0); // LED_RANGE=100mA, LED=50mA
   afe44xxWrite(CONTROL1, 0x010707); // Timers ON, average 3 samples
 
   afe44xxWrite(PRPCOUNT, 0X001F3F);
