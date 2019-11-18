@@ -154,7 +154,7 @@ boolean leadoff_deteted = true;
 uint8_t spo2_probe_open = false;
 int dec = 0;
 
-
+uint32_t CONTROL0_VAL = 0x00000000;
 
 void setup()
 {
@@ -197,15 +197,15 @@ void loop()
   //  if (drdy_trigger == HIGH)
   //  {
   //    detachInterrupt(0);
-  afe44xxWrite(CONTROL0, 0x000001);
+  
   IRtemp = afe44xxRead(LED1VAL);
-//  Serial.print("IR: ");
-//  Serial.println(IRtemp);
-  afe44xxWrite(CONTROL0, 0x000001);
+  // Serial.print("IR: ");
+  // Serial.println(IRtemp);
   REDtemp = afe44xxRead(LED2VAL);
-//  Serial.print("RED: ");
-//  Serial.println(REDtemp);
-//      afe44xx_data_ready = true;
+  // Serial.print("RED: ");
+  // Serial.println(REDtemp);
+  
+  //      afe44xx_data_ready = true;
   //  }
 
   //  if (afe44xx_data_ready == true)
@@ -233,8 +233,13 @@ void loop()
   {
 
     estimate_spo2(aun_ir_buffer, 100, aun_red_buffer, &n_spo2, &ch_spo2_valid, &n_heart_rate, &ch_hr_valid);
-    if (n_spo2 == -999)
-      Serial.println("Probe error!!!!");
+    if (n_spo2 == -999) {
+      afe44xxWrite(CONTROL0, 0x000001);
+      uint32_t diags = afe44xxRead(DIAG);
+      afe44xxWrite(CONTROL0, 0x000000);
+      Serial.print("Probe error!!!! Diags: ");
+      Serial.println(diags);
+    }
     else
     {
       Serial.print("calculating sp02...");
@@ -267,20 +272,21 @@ void afe44xx_drdy_event()
 void afe44xxInit (void)
 {
   //  Serial.println("afe44xx Initialization Starts");
-  afe44xxWrite(CONTROL0, 0x000000);
+  CONTROL0_VAL = 0x00000008;
+  afe44xxWrite(CONTROL0, CONTROL0_VAL);
 
-  afe44xxWrite(CONTROL0, 0x000008);
+  CONTROL0_VAL = 0x000000;
+  afe44xxWrite(CONTROL0, CONTROL0_VAL);
 
   afe44xxWrite(TIAGAIN, 0x000000); // CF = 5pF, RF = 500kR
   afe44xxWrite(TIA_AMB_GAIN, 0x000001);
 
   afe44xxWrite(LEDCNTRL, 0x001414);
-
-  afe44xxWrite(CONTROL0, 0x000001);
   afe44xxRead(LEDCNTRL);
-  afe44xxWrite(CONTROL0, 0x000000);
-  
-  afe44xxWrite(CONTROL2, 0x0000A0); // LED_RANGE=100mA, LED=50mA
+
+  afe44xxWrite(CONTROL2, 0x000A00); // LED_RANGE=100mA, LED=50mA
+  afe44xxRead(CONTROL2);
+
   afe44xxWrite(CONTROL1, 0x010707); // Timers ON, average 3 samples
 
   afe44xxWrite(PRPCOUNT, 0X001F3F);
@@ -334,6 +340,7 @@ void afe44xxWrite (uint8_t address, uint32_t data)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 unsigned long afe44xxRead (uint8_t address)
 {
+  afe44xxWrite(CONTROL0, CONTROL0_VAL | 0x1);
   unsigned long data = 0;
   digitalWrite (SPISTE, LOW); // enable device
   SPI.transfer (address); // send address to device
@@ -342,7 +349,7 @@ unsigned long afe44xxRead (uint8_t address)
   data |= ((unsigned long)SPI.transfer (0) << 8); // read middle 8 bits  data
   data |= SPI.transfer (0); // read bottom 8 bits data
   digitalWrite (SPISTE, HIGH); // disable device
-
+  afe44xxWrite(CONTROL0, CONTROL0_VAL & ~(0x1));
 
   return data; // return with 24 bits of read data
 }
