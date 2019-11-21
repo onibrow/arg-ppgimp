@@ -188,7 +188,6 @@ void setup()
 
 
   afe44xxInit ();
-  Serial.println("intilazition is done");
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -271,7 +270,7 @@ void afe44xx_drdy_event()
 ////////////////AFE44xx initialization//////////////////////////////////////////
 void afe44xxInit (void)
 {
-  //  Serial.println("afe44xx Initialization Starts");
+  Serial.println("afe44xx Initialization Start");
   CONTROL0_VAL = 0x00000008;
   afe44xxWrite(CONTROL0, CONTROL0_VAL);
 
@@ -281,49 +280,54 @@ void afe44xxInit (void)
   afe44xxWrite(TIAGAIN, 0x000000); // CF = 5pF, RF = 500kR
   afe44xxWrite(TIA_AMB_GAIN, 0x000001);
 
-  afe44xxWrite(LEDCNTRL, 0x001414);
+  afe44xxWrite(LEDCNTRL, 0x010606);
+  // afe44xxWrite(LEDCNTRL, 0x001414);
   afe44xxRead(LEDCNTRL);
 
-  afe44xxWrite(CONTROL2, 0x000A00); // LED_RANGE=100mA, LED=50mA
+  afe44xxWrite(CONTROL2, 0x000200); // LED_RANGE=100mA, LED=50mA
   afe44xxRead(CONTROL2);
 
-  afe44xxWrite(CONTROL1, 0x010707); // Timers ON, average 3 samples
+  afe44xxWrite(CONTROL1, 0x00101); // Timers ON, average 1 samples
+  // afe44xxWrite(CONTROL1, 0x000F7); // Timers ON, average 8 samples
+  afe44xxRead(CONTROL1);
 
-  afe44xxWrite(PRPCOUNT, 0X001F3F);
+  // Page 36 Table 2 
+  afe44xxWrite(LED2STC, 6050);
+  afe44xxWrite(LED2ENDC, 7998);
+  afe44xxWrite(LED2LEDSTC, 6000);
+  afe44xxWrite(LED2LEDENDC, 7999);
+  afe44xxWrite(ALED2STC, 50);
+  afe44xxWrite(ALED2ENDC, 1998);
 
-  afe44xxWrite(LED2STC, 0X001770);
-  afe44xxWrite(LED2ENDC, 0X001F3E);
-  afe44xxWrite(LED2LEDSTC, 0X001770);
-  afe44xxWrite(LED2LEDENDC, 0X001F3F);
-  afe44xxWrite(ALED2STC, 0X000000);
-  afe44xxWrite(ALED2ENDC, 0X0007CE);
-  afe44xxWrite(LED2CONVST, 0X000002);
-  afe44xxWrite(LED2CONVEND, 0X0007CF);
-  afe44xxWrite(ALED2CONVST, 0X0007D2);
-  afe44xxWrite(ALED2CONVEND, 0X000F9F);
+  afe44xxWrite(LED1STC, 2050);
+  afe44xxWrite(LED1ENDC, 3998);
+  afe44xxWrite(LED1LEDSTC, 2000);
+  afe44xxWrite(LED1LEDENDC, 3999);
+  afe44xxWrite(ALED1STC, 4050);
+  afe44xxWrite(ALED1ENDC, 5998);
 
-  afe44xxWrite(LED1STC, 0X0007D0);
-  afe44xxWrite(LED1ENDC, 0X000F9E);
-  afe44xxWrite(LED1LEDSTC, 0X0007D0);
-  afe44xxWrite(LED1LEDENDC, 0X000F9F);
-  afe44xxWrite(ALED1STC, 0X000FA0);
-  afe44xxWrite(ALED1ENDC, 0X00176E);
-  afe44xxWrite(LED1CONVST, 0X000FA2);
-  afe44xxWrite(LED1CONVEND, 0X00176F);
-  afe44xxWrite(ALED1CONVST, 0X001772);
-  afe44xxWrite(ALED1CONVEND, 0X001F3F);
+  afe44xxWrite(LED2CONVST, 4);
+  afe44xxWrite(LED2CONVEND, 1999);
+  afe44xxWrite(ALED2CONVST, 2004);
+  afe44xxWrite(ALED2CONVEND, 3999);
 
-  afe44xxWrite(ADCRSTCNT0, 0X000000);
-  afe44xxWrite(ADCRSTENDCT0, 0X000000);
-  afe44xxWrite(ADCRSTCNT1, 0X0007D0);
-  afe44xxWrite(ADCRSTENDCT1, 0X0007D0);
-  afe44xxWrite(ADCRSTCNT2, 0X000FA0);
-  afe44xxWrite(ADCRSTENDCT2, 0X000FA0);
-  afe44xxWrite(ADCRSTCNT3, 0X001770);
-  afe44xxWrite(ADCRSTENDCT3, 0X001770);
+  afe44xxWrite(LED1CONVST, 4004);
+  afe44xxWrite(LED1CONVEND, 5999);
+  afe44xxWrite(ALED1CONVST, 6004);
+  afe44xxWrite(ALED1CONVEND, 7999);
+
+  afe44xxWrite(ADCRSTCNT0, 0);
+  afe44xxWrite(ADCRSTENDCT0, 3);
+  afe44xxWrite(ADCRSTCNT1, 2000);
+  afe44xxWrite(ADCRSTENDCT1, 2003);
+  afe44xxWrite(ADCRSTCNT2, 4000);
+  afe44xxWrite(ADCRSTENDCT2, 4003);
+  afe44xxWrite(ADCRSTCNT3, 6000);
+  afe44xxWrite(ADCRSTENDCT3, 6003);
+  afe44xxWrite(PRPCOUNT, 7999);
 
   delay(1000);
-  // Serial.println("afe44xx Initialization Done");
+  Serial.println("afe44xx Initialization Done");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
