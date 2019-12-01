@@ -191,19 +191,20 @@ void setup()
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void loop()
-{
+/*
+  void loop()
+  {
   //  if (drdy_trigger == HIGH)
   //  {
   //    detachInterrupt(0);
-  
+
   IRtemp = afe44xxRead(LED1VAL);
   // Serial.print("IR: ");
   // Serial.println(IRtemp);
   REDtemp = afe44xxRead(LED2VAL);
   // Serial.print("RED: ");
   // Serial.println(REDtemp);
-  
+
   //      afe44xx_data_ready = true;
   //  }
 
@@ -233,9 +234,7 @@ void loop()
 
     estimate_spo2(aun_ir_buffer, 100, aun_red_buffer, &n_spo2, &ch_spo2_valid, &n_heart_rate, &ch_hr_valid);
     if (n_spo2 == -999) {
-      afe44xxWrite(CONTROL0, 0x000001);
       uint32_t diags = afe44xxRead(DIAG);
-      afe44xxWrite(CONTROL0, 0x000000);
       Serial.print("Probe error!!!! Diags: ");
       Serial.println(diags);
     }
@@ -258,6 +257,16 @@ void loop()
 
   //  }
   delay(10);
+  }
+*/
+
+void loop() {
+  IRtemp = afe44xxRead(LED1VAL);
+  REDtemp = afe44xxRead(LED2VAL);
+  Serial.print(IRtemp);
+  Serial.print(", ");
+  Serial.println(REDtemp);
+  delay(100);
 }
 
 ///////// Gets Fired on DRDY event/////////////////////////////
@@ -276,22 +285,27 @@ void afe44xxInit (void)
 
   CONTROL0_VAL = 0x000000;
   afe44xxWrite(CONTROL0, CONTROL0_VAL);
+  
+  afe44xxWrite(CONTROL1, 0x000101); // Timers ON, average 1 samples
+  uint32_t cntl1 = afe44xxRead(CONTROL1);
+  Serial.print("CONTROL1: 0x");
+  Serial.println(cntl1, HEX);
 
   afe44xxWrite(TIAGAIN, 0x000000); // CF = 5pF, RF = 500kR
   afe44xxWrite(TIA_AMB_GAIN, 0x000001);
 
-  afe44xxWrite(LEDCNTRL, 0x010606);
-  // afe44xxWrite(LEDCNTRL, 0x001414);
-  afe44xxRead(LEDCNTRL);
+  afe44xxWrite(LEDCNTRL, 0x000606);
+//  afe44xxWrite(LEDCNTRL, 0x030006);
+//  afe44xxWrite(LEDCNTRL, 0x001414);
+  Serial.print("LEDCNTRL: 0x");
+  Serial.println(afe44xxRead(LEDCNTRL), HEX);
 
-  afe44xxWrite(CONTROL2, 0x000200); // LED_RANGE=100mA, LED=50mA
-  afe44xxRead(CONTROL2);
+  afe44xxWrite(CONTROL2, 0x060A00);
+  uint32_t cntl2 = afe44xxRead(CONTROL2);
+  Serial.print("CONTROL2: 0x");
+  Serial.println(cntl2, HEX);
 
-  afe44xxWrite(CONTROL1, 0x00101); // Timers ON, average 1 samples
-  // afe44xxWrite(CONTROL1, 0x000F7); // Timers ON, average 8 samples
-  afe44xxRead(CONTROL1);
-
-  // Page 36 Table 2 
+  // Page 36 Table 2
   afe44xxWrite(LED2STC, 6050);
   afe44xxWrite(LED2ENDC, 7998);
   afe44xxWrite(LED2LEDSTC, 6000);
@@ -342,15 +356,15 @@ void afe44xxWrite (uint8_t address, uint32_t data)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-unsigned long afe44xxRead (uint8_t address)
+uint32_t afe44xxRead (uint8_t address)
 {
   afe44xxWrite(CONTROL0, CONTROL0_VAL | 0x1);
-  unsigned long data = 0;
+  uint32_t data = 0;
   digitalWrite (SPISTE, LOW); // enable device
   SPI.transfer (address); // send address to device
   //SPI.transfer (data);
-  data |= ((unsigned long)SPI.transfer (0) << 16); // read top 8 bits data
-  data |= ((unsigned long)SPI.transfer (0) << 8); // read middle 8 bits  data
+  data |= ((uint32_t)SPI.transfer (0) << 16); // read top 8 bits data
+  data |= ((uint32_t)SPI.transfer (0) << 8); // read middle 8 bits  data
   data |= SPI.transfer (0); // read bottom 8 bits data
   digitalWrite (SPISTE, HIGH); // disable device
   afe44xxWrite(CONTROL0, CONTROL0_VAL & ~(0x1));
