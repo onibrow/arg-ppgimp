@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.1">
+<eagle version="9.5.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="yes"/>
@@ -2489,8 +2489,6 @@ Combination of BAC and AC</description>
 <contactref element="U4" pad="14"/>
 <contactref element="D1" pad="N"/>
 <contactref element="R7" pad="2"/>
-<contactref element="J5" pad="5"/>
-<contactref element="J5" pad="6"/>
 <contactref element="J7" pad="4"/>
 <wire x1="30.8763" y1="10.5" x2="32.15" y2="10.5" width="0.1524" layer="1"/>
 <wire x1="32.15" y1="10.5" x2="30.38" y2="8.73" width="0.1524" layer="1"/>
@@ -2502,15 +2500,16 @@ Combination of BAC and AC</description>
 <wire x1="36.38128125" y1="16.25" x2="34" y2="16.25" width="0.1524" layer="1"/>
 <wire x1="32.15" y1="10.95018125" x2="32.15" y2="10.5" width="0.1524" layer="1"/>
 <wire x1="34" y1="16.25" x2="31.75" y2="16.25" width="0.1524" layer="16"/>
-<wire x1="30.38" y1="7.25" x2="30.38" y2="5.17" width="0.1524" layer="1"/>
-<wire x1="30.5" y1="4.55" x2="31" y2="4.55" width="0.1524" layer="1"/>
 <wire x1="30.75" y1="15.25" x2="30.75" y2="11.75" width="0.1524" layer="16"/>
 <via x="30.75" y="11.75" extent="1-16" drill="0.4"/>
 <wire x1="30.75" y1="11.75" x2="31.35018125" y2="11.75" width="0.1524" layer="1"/>
 <wire x1="31.35018125" y1="11.75" x2="32.15" y2="10.95018125" width="0.1524" layer="1"/>
 <wire x1="31.75" y1="16.25" x2="30.75" y2="15.25" width="0.1524" layer="16"/>
-<wire x1="30.5" y1="5.05" x2="30.5" y2="4.55" width="0.1524" layer="1"/>
-<wire x1="30.38" y1="5.17" x2="30.5" y2="5.05" width="0.1524" layer="1"/>
+<contactref element="J5" pad="2"/>
+<contactref element="J5" pad="1"/>
+<wire x1="28.5" y1="4.55" x2="29" y2="4.55" width="0.1524" layer="1"/>
+<wire x1="30.38" y1="7.25" x2="29" y2="5.87" width="0.1524" layer="1"/>
+<wire x1="29" y1="5.87" x2="29" y2="4.55" width="0.1524" layer="1"/>
 </signal>
 <signal name="TXP">
 <contactref element="U4" pad="15"/>
@@ -2788,25 +2787,26 @@ Combination of BAC and AC</description>
 <wire x1="50" y1="24.75" x2="51.25" y2="24.75" width="0.508" layer="1"/>
 <wire x1="48" y1="33.375" x2="48" y2="26.75" width="0.508" layer="1"/>
 <wire x1="48" y1="26.75" x2="50" y2="24.75" width="0.508" layer="1"/>
-<contactref element="J5" pad="1"/>
-<contactref element="J5" pad="2"/>
 <contactref element="J5" pad="17"/>
 <contactref element="J5" pad="18"/>
-<wire x1="28.5" y1="4.55" x2="29" y2="4.55" width="0.254" layer="1"/>
-<wire x1="29" y1="4.55" x2="29" y2="3.5" width="0.254" layer="1"/>
-<wire x1="29" y1="3.5" x2="29.5" y2="3" width="0.254" layer="1"/>
 <wire x1="36.5" y1="3.75" x2="36.5" y2="4.55" width="0.254" layer="1"/>
-<wire x1="29.5" y1="3" x2="35.5" y2="3" width="0.254" layer="1"/>
 <wire x1="35.5" y1="3" x2="35.75" y2="3" width="0.254" layer="1"/>
 <wire x1="35.75" y1="3" x2="36.5" y2="3.75" width="0.254" layer="1"/>
 <wire x1="36.5" y1="4.55" x2="37" y2="4.55" width="0.254" layer="1"/>
-<wire x1="35.5" y1="3" x2="49" y2="3" width="0.254" layer="1"/>
+<wire x1="49" y1="3" x2="35.5" y2="3" width="0.254" layer="1"/>
 <wire x1="52" y1="18.5" x2="53.5" y2="20" width="0.254" layer="1"/>
 <wire x1="53.5" y1="20" x2="53.5" y2="23.75" width="0.254" layer="1"/>
 <wire x1="52.5" y1="24.75" x2="51.25" y2="24.75" width="0.254" layer="1"/>
 <wire x1="49" y1="3" x2="52" y2="6" width="0.254" layer="1"/>
 <wire x1="52" y1="6" x2="52" y2="18.5" width="0.254" layer="1"/>
 <wire x1="53.5" y1="23.75" x2="52.5" y2="24.75" width="0.254" layer="1"/>
+<contactref element="J5" pad="5"/>
+<contactref element="J5" pad="6"/>
+<wire x1="35.5" y1="3" x2="31.5" y2="3" width="0.254" layer="1"/>
+<wire x1="31.5" y1="3" x2="30.75" y2="3.75" width="0.254" layer="1"/>
+<wire x1="30.75" y1="3.75" x2="30.75" y2="4.3" width="0.254" layer="1"/>
+<wire x1="30.75" y1="4.3" x2="31" y2="4.55" width="0.254" layer="1"/>
+<wire x1="30.75" y1="4.3" x2="30.5" y2="4.55" width="0.254" layer="1"/>
 </signal>
 <signal name="BAT+" class="1">
 <contactref element="J4" pad="2"/>
