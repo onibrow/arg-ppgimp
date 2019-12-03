@@ -266,7 +266,7 @@ void loop() {
   Serial.print(IRtemp);
   Serial.print(", ");
   Serial.println(REDtemp);
-  delay(100);
+  delay(1000);
 }
 
 ///////// Gets Fired on DRDY event/////////////////////////////
@@ -282,28 +282,14 @@ void afe44xxInit (void)
   Serial.println("afe44xx Initialization Start");
   CONTROL0_VAL = 0x00000008;
   afe44xxWrite(CONTROL0, CONTROL0_VAL);
-
+  delay(10);
   CONTROL0_VAL = 0x000000;
   afe44xxWrite(CONTROL0, CONTROL0_VAL);
-  
-  afe44xxWrite(CONTROL1, 0x000101); // Timers ON, average 1 samples
-  uint32_t cntl1 = afe44xxRead(CONTROL1);
-  Serial.print("CONTROL1: 0x");
-  Serial.println(cntl1, HEX);
+  delay(10);
 
+  // Gain Stages
   afe44xxWrite(TIAGAIN, 0x000000); // CF = 5pF, RF = 500kR
   afe44xxWrite(TIA_AMB_GAIN, 0x000001);
-
-  afe44xxWrite(LEDCNTRL, 0x000606);
-//  afe44xxWrite(LEDCNTRL, 0x030006);
-//  afe44xxWrite(LEDCNTRL, 0x001414);
-  Serial.print("LEDCNTRL: 0x");
-  Serial.println(afe44xxRead(LEDCNTRL), HEX);
-
-  afe44xxWrite(CONTROL2, 0x060A00);
-  uint32_t cntl2 = afe44xxRead(CONTROL2);
-  Serial.print("CONTROL2: 0x");
-  Serial.println(cntl2, HEX);
 
   // Page 36 Table 2
   afe44xxWrite(LED2STC, 6050);
@@ -340,6 +326,20 @@ void afe44xxInit (void)
   afe44xxWrite(ADCRSTENDCT3, 6003);
   afe44xxWrite(PRPCOUNT, 7999);
 
+  // Start Sampling
+  afe44xxWrite(CONTROL1, 0x000101); // Timers ON, average 1 samples
+  Serial.print("CONTROL1: 0x");
+  Serial.println(afe44xxRead(CONTROL1), HEX);
+
+//  afe44xxWrite(LEDCNTRL, 0x000606);
+    afe44xxWrite(LEDCNTRL, 0x000000);
+  //  afe44xxWrite(LEDCNTRL, 0x001414);
+  Serial.print("LEDCNTRL: 0x");
+  Serial.println(afe44xxRead(LEDCNTRL), HEX);
+
+  afe44xxWrite(CONTROL2, 0x060A01);
+  Serial.print("CONTROL2: 0x");
+  Serial.println(afe44xxRead(CONTROL2), HEX);
   delay(1000);
   Serial.println("afe44xx Initialization Done");
 }

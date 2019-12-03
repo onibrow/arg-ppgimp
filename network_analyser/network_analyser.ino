@@ -73,7 +73,7 @@ void reset_muxes() {
 
 void loop(void)
 {
-  meas_imp(1, 2);
+  meas_imp(2, 3);
   delay(5000);
   meas_imp(16, 16);
   delay(5000);
