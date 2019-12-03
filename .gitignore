@@ -16,6 +16,7 @@ __pycache__/
 # lbr temp files
 *.l#*
 scono.l#*
+*.job
 
 # backup sch/brd files
 **/*.[b,s,l,d]#*
