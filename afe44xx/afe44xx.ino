@@ -93,7 +93,7 @@ double Redac;
 double SpOpercentage;
 double Ratio;
 
-const int SPISTE = 10;  // chip select
+const int SPISTE = 4; // 10 for UNO, 4 for MIPPE32U4 // chip select
 const int SPIDRDY = 2;  // data ready pin
 volatile int drdy_trigger = LOW;
 
