@@ -6,7 +6,7 @@
 #include <Wire.h>
 #include "AD5933.h"
 
-#define START_FREQ  (1000)
+#define START_FREQ  (10000)
 #define FREQ_INCR   (1000)
 #define NUM_INCR    (10)
 // TODO: TUNE THIS
@@ -68,15 +68,19 @@ void reset_muxes() {
     digitalWrite(mux_one[i],  HIGH);
     delay(1);
   }
+  AD5933::calibrate(gain, phase, REF_RESIST, NUM_INCR + 1);
   return;
 }
 
 void loop(void)
 {
-  meas_imp(2, 3);
-  delay(5000);
-  meas_imp(16, 16);
-  delay(5000);
+    meas_imp(2, 3);
+//  set_pins(2, 3);
+  delay(3000);
+//    meas_imp(16, 16);
+    meas_imp(3, 4);
+//  set_pins(4, 5);
+  delay(3000);
 }
 
 void meas_imp(int elec_zero, int elec_one) {
@@ -93,14 +97,20 @@ void meas_imp(int elec_zero, int elec_one) {
   Serial.print(" and ");
   Serial.print(elec_one);
   Serial.println(". Starting Sweep...");
+  set_pins(elec_zero, elec_one);
+  delay(100);
+  frequencySweepEasy();
+  delay(50);
+  reset_muxes();
+}
+
+void set_pins(int elec_zero, int elec_one) {
   for (int i = 0; i < 4; i++) {
     digitalWrite(mux_zero[i], ((elec_zero - 1) >> i) & 0x1);
     delay(1);
     digitalWrite(mux_one[i],  ((elec_one  - 1) >> i) & 0x1);
     delay(1);
   }
-  frequencySweepEasy();
-//  reset_muxes();
 }
 
 void frequencySweepEasy() {
@@ -129,8 +139,7 @@ void frequencySweepEasy() {
       Serial.print("  |Z|=");
       Serial.println(impedance);
     }
-    //    Serial.println("Frequency sweep complete!");
   } else {
-    //    Serial.println("Frequency sweep failed...");
+    Serial.println("Frequency sweep failed...");
   }
 }
